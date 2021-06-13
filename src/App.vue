@@ -8,7 +8,12 @@
       <p>See the README file for assignment requirements.</p>
       <div class="premium-recipe-wrapper">
         <PremiumRecipeCard
-          v-bind:data="data"
+          v-bind:nutrients="nutrients"
+          v-bind:duration="duration"
+          v-bind:title="title"
+          v-bind:image="image"
+          v-bind:rating="rating"
+          v-bind:loaded="loaded"
           energy-units="calories"
           v-bind:energy="energy"
           :liked="false"
@@ -17,8 +22,13 @@
         />
         <div class="gutter" />
         <PremiumRecipeCard
-          v-bind:data="data"
-          energy-units="calories"
+          v-bind:nutrients="nutrients"
+          v-bind:duration="duration"
+          v-bind:title="title"
+          v-bind:loaded="loaded"
+          v-bind:image="image"
+          v-bind:rating="rating"
+          energy-units="kilojoules"
           v-bind:energy="energy"
           :liked="true"
           @click="action"
@@ -32,8 +42,7 @@
 <script>
 import PremiumRecipeCard from "./components/PremiumRecipeCard.vue";
 import getPremiumRecipeCardData from "./api";
-import { kiloJoulesToCalories } from "./utils";
-
+import { formatDuration, kiloJoulesToCalories } from "./utils";
 export default {
   name: "App",
   data() {
@@ -56,6 +65,21 @@ export default {
         return kiloJoulesToCalories(energy);
       }
       return energy;
+    },
+    nutrients() {
+      return this.data?.nutrients ?? {};
+    },
+    duration() {
+      return formatDuration(this.data?.preparationTimeMinutes);
+    },
+    image() {
+      return this.data?.image;
+    },
+    title() {
+      return this.data?.title;
+    },
+    rating() {
+      return this.data?.rating ?? {};
     }
   },
   methods: {

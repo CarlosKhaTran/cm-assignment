@@ -1,7 +1,7 @@
 <template>
   <div id="ratings" class="rating-wrapper" v-bind:onClick="onClick">
     <div v-for="star in stars" :key="star.key">
-      <img v-bind:src="star.src" class="star-icon" />
+      <img v-bind:src="star.src" class="star-icon" v-bind:class="star.class" />
     </div>
     <div class="rating-count" v-if="showCount">{{ count }}</div>
   </div>
@@ -22,12 +22,15 @@ export default {
         switch (true) {
           case el - score <= 0:
             star.src = require("../assets/full-star.svg");
+            star.class = "full-star";
             break;
           case el - score === 0.5:
             star.src = require("../assets/half-star.svg");
+            star.class = "half-star";
             break;
           default:
             star.src = require("../assets/empty-star.svg");
+            star.class = "empty-star";
         }
         return star;
       });

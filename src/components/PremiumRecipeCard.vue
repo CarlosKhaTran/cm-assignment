@@ -9,7 +9,7 @@
       <img v-if="image" class="reciept-image" :src="image" />
       <div class="overlay" />
     </div>
-    <div v-if="loaded" class="receipt-information-wrapper">
+    <div class="receipt-information-wrapper">
       <div v-if="!isRecipeOfDay" class="receipt-tag">
         <img src="../assets/trophy.svg" class="trophy" /> Premium Recipe
       </div>
@@ -25,7 +25,7 @@
             {{ this.duration }}
           </div>
           <img src="../assets/gas.svg" />
-          <div class="detail">
+          <div class="detail energy-value">
             {{ this.energyValue }}
           </div>
         </div>
@@ -38,68 +38,56 @@
       </div>
     </div>
     <button v-if="isRecipeOfDay" class="learn-more">Learn More</button>
-    <img v-bind:src="likeIcon" class="like-icon" />
+    <img
+      v-bind:src="likeIcon.src"
+      class="like-icon"
+      v-bind:class="likeIcon.class"
+    />
   </div>
 </template>
 
 <script>
-import { isEmpty } from "lodash";
-import {
-  caloriesToKiloJoules,
-  formatCountValue,
-  formatDuration
-} from "../utils";
+import { caloriesToKiloJoules } from "../utils";
 import Ratings from "./Ratings.vue";
 import NutrientsInfo from "./NutrientsInfo.vue";
 
 export default {
-  props: ["data", "energy", "energy-units", "liked", "isRecipeOfDay"],
+  props: [
+    "nutrients",
+    "duration",
+    "energy",
+    "title",
+    "rating",
+    "image",
+    "energy-units",
+    "liked",
+    "isRecipeOfDay"
+  ],
   components: {
     Ratings,
     NutrientsInfo
   },
   computed: {
-    loaded() {
-      return !isEmpty(this.data);
-    },
-    image() {
-      return this.data?.image;
-    },
-    title() {
-      return this.data?.title;
-    },
-    rating() {
-      return this.data?.rating ?? {};
-    },
-    count() {
-      return formatCountValue(this.data?.rating?.count, "rating", "ratings");
-    },
     energyValue() {
       if (this["energy-units"] === "calories") {
         return `${this.energy}  Calories`;
       }
       return `${caloriesToKiloJoules(this.energy)} Kilojoules`;
     },
-    duration() {
-      return formatDuration(this.data?.preparationTimeMinutes);
-    },
-    nutrients() {
-      return this.data?.nutrients ?? {};
-    },
     likeIcon() {
       if (this.liked) {
-        return require("../assets/heart.svg");
+        return { src: require("../assets/heart.svg"), class: "heart" };
       }
-      return require("../assets/heart-outline.svg");
+      return {
+        src: require("../assets/heart-outline.svg"),
+        class: "heart-outline"
+      };
+    },
+    loaded() {
+      return !!this.title;
     }
   },
-  name: "premium-card",
-  created: function() {
-    console.log("user data from parent component:");
-  },
-  updated() {
-    console.log(this.liked, typeof this.liked);
-  }
+  name: "premium-card"
 };
 </script>
 

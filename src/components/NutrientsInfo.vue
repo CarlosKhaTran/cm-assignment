@@ -1,18 +1,18 @@
 <template>
-  <div id="nutrigents" class="nutrients-wrapper">
+  <div id="nutrients" class="nutrients-wrapper">
     <div class="dot red" />
-    <div class="nutrigent">{{ nutrients.carbs }} g</div>
+    <div class="nutrient carbs">{{ nutrients.carbs }} g</div>
     <div class="dot blue" />
-    <div class="nutrigent">{{ nutrients.proteins }} g</div>
+    <div class="nutrient proteins">{{ nutrients.proteins }} g</div>
     <div class="dot orange" />
-    <div class="nutrigent">{{ nutrients.fats }} g</div>
+    <div class="nutrient fats">{{ nutrients.fats }} g</div>
   </div>
 </template>
 
 <script>
 export default {
   props: ["nutrients"],
-  name: "nutrigents"
+  name: "nutrients"
 };
 </script>
 
@@ -21,7 +21,7 @@ export default {
   display: flex;
   align-items: center;
 }
-.nutrigent {
+.nutrient {
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
