@@ -11,11 +11,13 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "core-js": "^3.6.4",
+    "core-js": "^3.14.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "@babel/compat-data": "^7.14.5",
     "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.14.5",
     "@storybook/addon-actions": "^5.3.14",
     "@storybook/addon-knobs": "5.3.14",
     "@storybook/addons": "^5.3.14",

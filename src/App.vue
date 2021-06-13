@@ -6,9 +6,8 @@
       </div>
       <h2>Carb Manager Dev Assignment</h2>
       <p>See the README file for assignment requirements.</p>
-
       <div class="premium-recipe-wrapper">
-        <PremiumRecipeCard />
+        <PremiumRecipeCard v-bind:data="data" />
       </div>
     </div>
   </div>
@@ -16,11 +15,21 @@
 
 <script>
 import PremiumRecipeCard from "./components/PremiumRecipeCard.vue";
+import getPremiumRecipeCardData from "./api";
 
 export default {
   name: "App",
+  data() {
+    return {
+      data: {}
+    };
+  },
   components: {
     PremiumRecipeCard
+  },
+  async beforeMount() {
+    const data = await getPremiumRecipeCardData();
+    this.data = data;
   }
 };
 </script>
