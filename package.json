@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "core-js": "^3.14.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {

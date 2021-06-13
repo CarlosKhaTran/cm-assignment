@@ -7,7 +7,13 @@
       <h2>Carb Manager Dev Assignment</h2>
       <p>See the README file for assignment requirements.</p>
       <div class="premium-recipe-wrapper">
-        <PremiumRecipeCard v-bind:data="data" />
+        <PremiumRecipeCard
+          v-bind:data="data"
+          energy-units="calories"
+          v-bind:energy="energy"
+          :liked="true"
+          v-on:click="handleClick"
+        />
       </div>
     </div>
   </div>
@@ -16,6 +22,7 @@
 <script>
 import PremiumRecipeCard from "./components/PremiumRecipeCard.vue";
 import getPremiumRecipeCardData from "./api";
+import { kiloJoulesToCalories } from "./utils";
 
 export default {
   name: "App",
@@ -30,6 +37,26 @@ export default {
   async beforeMount() {
     const data = await getPremiumRecipeCardData();
     this.data = data;
+  },
+  computed: {
+    energy() {
+      const unit = this.data?.units?.energy;
+      const energy = this.data?.energy;
+      if (unit === "kJ") {
+        return kiloJoulesToCalories(energy);
+      }
+      return energy;
+    }
+  },
+  methods: {
+    handleClick: function(event) {
+      // `this` inside methods points to the Vue instance
+      alert("Hello " + this.name + "!");
+      // `event` is the native DOM event
+      if (event) {
+        alert(event.target.tagName);
+      }
+    }
   }
 };
 </script>
