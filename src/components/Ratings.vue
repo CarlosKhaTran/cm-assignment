@@ -3,7 +3,7 @@
     <div v-for="star in stars" :key="star.key">
       <img v-bind:src="star.src" class="star-icon" />
     </div>
-    <div class="rating-count">{{ count }}</div>
+    <div class="rating-count" v-if="showCount">{{ count }}</div>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import { range } from "lodash";
 import { formatCountValue } from "../utils";
 
 export default {
-  props: ["rating", "onClick"],
+  props: ["rating", "onClick", "showCount"],
   name: "ratings",
   computed: {
     stars() {

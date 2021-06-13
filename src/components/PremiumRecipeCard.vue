@@ -1,30 +1,49 @@
 <template>
-  <div id="premium-card" class="premium-card" @click="$emit('click')">
+  <div
+    id="premium-card"
+    class="premium-card"
+    @click="$emit('click')"
+    v-bind:class="{ important: isReceiptOfDay }"
+  >
     <div class="image-wrapper">
       <img v-if="image" class="reciept-image" :src="image" />
       <div class="overlay" />
-      <img v-bind:src="likeIcon" class="like-icon" />
     </div>
     <div v-if="loaded" class="receipt-information-wrapper">
-      <div class="receipt-tag">
+      <div v-if="!isReceiptOfDay" class="receipt-tag">
         <img src="../assets/trophy.svg" class="trophy" /> Premium Recipe
       </div>
+      <span v-if="isReceiptOfDay" class="receipt-of-day"
+        >RECIPE OF THE DAY</span
+      >
       <div class="receipt-title">
         {{ title }}
       </div>
-      <Ratings v-bind:rating="this.rating" />
+      <Ratings v-bind:rating="this.rating" v-bind:showCount="!isReceiptOfDay" />
       <div class="more-info-wrapper">
-        <img src="../assets/clock.svg" />
-        <div class="detail">
-          {{ this.duration }}
+        <div class="duration-and-energy" v-if="!isReceiptOfDay">
+          <img src="../assets/clock.svg" />
+          <div class="detail">
+            {{ this.duration }}
+          </div>
+          <img src="../assets/gas.svg" />
+          <div class="detail">
+            {{ this.energyValue }}
+          </div>
         </div>
-        <img src="../assets/gas.svg" />
-        <div class="detail">
+        <div class="duration-and-energy detail" v-if="isReceiptOfDay">
+          {{ this.duration }}
+          ●
           {{ this.energyValue }}
         </div>
-        <NutrigentsInfo v-bind:nutrients="this.nutrients" />
+        <NutrigentsInfo
+          v-bind:nutrients="this.nutrients"
+          v-bind:showIcon="!isReceiptOfDay"
+        />
       </div>
     </div>
+    <button v-if="isReceiptOfDay" class="learn-more">Learn More</button>
+    <img v-bind:src="likeIcon" class="like-icon" />
   </div>
 </template>
 
@@ -39,7 +58,14 @@ import Ratings from "./Ratings.vue";
 import NutrigentsInfo from "./NutrigentsInfo.vue";
 
 export default {
-  props: ["data", "energy", "energy-units", "liked", "handleClick"],
+  props: [
+    "data",
+    "energy",
+    "energy-units",
+    "liked",
+    "handleClick",
+    "isReceiptOfDay"
+  ],
   components: {
     Ratings,
     NutrigentsInfo
@@ -94,11 +120,11 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .premium-card {
   width: 343px;
   background: #ffffff;
-  box-shadow: 0px 13px 35px rgba(0, 30, 47, 0.1);
+  /* box-shadow: 0px 13px 35px rgba(0, 30, 47, 0.1); */
   border-radius: 12px;
   overflow: hidden;
   margin-left: auto;
@@ -106,6 +132,7 @@ export default {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  position: relative;
 }
 .reciept-image {
   object-fit: cover;
@@ -113,7 +140,7 @@ export default {
   width: 100%;
 }
 .image-wrapper {
-  width: 100%;
+  height: 218px;
   position: relative;
   border: none;
 }
@@ -195,5 +222,81 @@ export default {
   position: absolute;
   top: 16px;
   right: 16px;
+  z-index: 3;
+}
+.isReceiptOfDay {
+  position: relative;
+}
+.premium-card.important .receipt-information-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+  background-blend-mode: multiply;
+  mix-blend-mode: normal;
+  border-radius: 12px;
+}
+.premium-card.important .receipt-information-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin-top: 0;
+  background: rgba(0, 0, 0, 0.45);
+  background-blend-mode: multiply;
+  mix-blend-mode: normal;
+  border-radius: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.premium-card.important .receipt-information-wrapper div {
+  color: white !important;
+}
+.premium-card.important .receipt-title {
+  margin-top: 2px;
+}
+.premium-card.important .more-info-wrapper {
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+.premium-card.important .nutrients-wrapper {
+  flex: unset;
+}
+.receipt-of-day {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  color: #1bc98e !important;
+  text-align: left;
+  margin-top: 33px;
+  margin-left: 16px;
+}
+.duration-and-energy {
+  display: flex;
+  margin-left: 0;
+  flex: 1;
+  margin-right: 0;
+  align-items: flex-start !important;
+}
+.learn-more {
+  background: rgba(255, 255, 255, 0.4);
+  mix-blend-mode: normal;
+  position: absolute;
+  bottom: 23px;
+  right: 16px;
+  height: 30px;
+  padding: 6px 19px 8px 19px;
+  border-radius: 15px;
+  color: white;
+  border: none;
+  z-index: 2;
+  font-weight: bold;
+  font-family: "proxima-nova", Helvetica, Arial, sans-serif;
 }
 </style>

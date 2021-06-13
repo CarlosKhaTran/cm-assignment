@@ -13,6 +13,7 @@
           v-bind:energy="energy"
           :liked="true"
           v-on:click="handleClick"
+          :isReceiptOfDay="true"
         />
       </div>
     </div>
