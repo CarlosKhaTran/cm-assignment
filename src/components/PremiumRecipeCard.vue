@@ -9,7 +9,7 @@
       <img v-if="image" class="reciept-image" :src="image" />
       <div class="overlay" />
     </div>
-    <div class="receipt-information-wrapper">
+    <div v-if="loaded" class="receipt-information-wrapper">
       <div v-if="!isRecipeOfDay" class="receipt-tag">
         <img src="../assets/trophy.svg" class="trophy" /> Premium Recipe
       </div>
