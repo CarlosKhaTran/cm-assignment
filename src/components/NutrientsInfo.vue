@@ -19,8 +19,6 @@ export default {
 <style scoped>
 .nutrients-wrapper {
   display: flex;
-  flex: 1;
-  justify-content: flex-end;
   align-items: center;
 }
 .nutrigent {

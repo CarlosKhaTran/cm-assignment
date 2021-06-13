@@ -20,10 +20,10 @@ export default {
         const score = this.rating?.score;
         const star = { key: el };
         switch (true) {
-          case score - el >= 1:
+          case el - score <= 0:
             star.src = require("../assets/full-star.svg");
             break;
-          case 0 <= score - el >= 0.5:
+          case el - score === 0.5:
             star.src = require("../assets/half-star.svg");
             break;
           default:

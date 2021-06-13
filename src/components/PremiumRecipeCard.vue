@@ -3,25 +3,23 @@
     id="premium-card"
     class="premium-card"
     @click="$emit('click')"
-    v-bind:class="{ important: isReceiptOfDay }"
+    v-bind:class="{ important: isRecipeOfDay }"
   >
     <div class="image-wrapper">
       <img v-if="image" class="reciept-image" :src="image" />
       <div class="overlay" />
     </div>
     <div v-if="loaded" class="receipt-information-wrapper">
-      <div v-if="!isReceiptOfDay" class="receipt-tag">
+      <div v-if="!isRecipeOfDay" class="receipt-tag">
         <img src="../assets/trophy.svg" class="trophy" /> Premium Recipe
       </div>
-      <span v-if="isReceiptOfDay" class="receipt-of-day"
-        >RECIPE OF THE DAY</span
-      >
+      <span v-if="isRecipeOfDay" class="receipt-of-day">RECIPE OF THE DAY</span>
       <div class="receipt-title">
         {{ title }}
       </div>
-      <Ratings v-bind:rating="this.rating" v-bind:showCount="!isReceiptOfDay" />
+      <Ratings v-bind:rating="this.rating" v-bind:showCount="!isRecipeOfDay" />
       <div class="more-info-wrapper">
-        <div class="duration-and-energy" v-if="!isReceiptOfDay">
+        <div class="duration-and-energy" v-if="!isRecipeOfDay">
           <img src="../assets/clock.svg" />
           <div class="detail">
             {{ this.duration }}
@@ -31,18 +29,15 @@
             {{ this.energyValue }}
           </div>
         </div>
-        <div class="duration-and-energy detail" v-if="isReceiptOfDay">
+        <div class="duration-and-energy detail" v-if="isRecipeOfDay">
           {{ this.duration }}
           ●
           {{ this.energyValue }}
         </div>
-        <NutrigentsInfo
-          v-bind:nutrients="this.nutrients"
-          v-bind:showIcon="!isReceiptOfDay"
-        />
+        <NutrientsInfo v-bind:nutrients="this.nutrients" />
       </div>
     </div>
-    <button v-if="isReceiptOfDay" class="learn-more">Learn More</button>
+    <button v-if="isRecipeOfDay" class="learn-more">Learn More</button>
     <img v-bind:src="likeIcon" class="like-icon" />
   </div>
 </template>
@@ -55,20 +50,13 @@ import {
   formatDuration
 } from "../utils";
 import Ratings from "./Ratings.vue";
-import NutrigentsInfo from "./NutrigentsInfo.vue";
+import NutrientsInfo from "./NutrientsInfo.vue";
 
 export default {
-  props: [
-    "data",
-    "energy",
-    "energy-units",
-    "liked",
-    "handleClick",
-    "isReceiptOfDay"
-  ],
+  props: ["data", "energy", "energy-units", "liked", "isRecipeOfDay"],
   components: {
     Ratings,
-    NutrigentsInfo
+    NutrientsInfo
   },
   computed: {
     loaded() {
@@ -111,11 +99,6 @@ export default {
   },
   updated() {
     console.log(this.liked, typeof this.liked);
-  },
-  methods: {
-    click(e) {
-      this.handleClick(e);
-    }
   }
 };
 </script>
@@ -124,7 +107,7 @@ export default {
 .premium-card {
   width: 343px;
   background: #ffffff;
-  /* box-shadow: 0px 13px 35px rgba(0, 30, 47, 0.1); */
+  box-shadow: 0px 13px 35px rgba(0, 30, 47, 0.1);
   border-radius: 12px;
   overflow: hidden;
   margin-left: auto;
@@ -224,7 +207,7 @@ export default {
   right: 16px;
   z-index: 3;
 }
-.isReceiptOfDay {
+.isRecipeOfDay {
   position: relative;
 }
 .premium-card.important .receipt-information-wrapper {
@@ -282,7 +265,10 @@ export default {
   margin-left: 0;
   flex: 1;
   margin-right: 0;
-  align-items: flex-start !important;
+  align-items: center;
+}
+.premium-card.important .duration-and-energy {
+  align-items: flex-start;
 }
 .learn-more {
   background: rgba(255, 255, 255, 0.4);

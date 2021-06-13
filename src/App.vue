@@ -11,9 +11,18 @@
           v-bind:data="data"
           energy-units="calories"
           v-bind:energy="energy"
+          :liked="false"
+          :isRecipeOfDay="true"
+          @click="action"
+        />
+        <div class="gutter" />
+        <PremiumRecipeCard
+          v-bind:data="data"
+          energy-units="calories"
+          v-bind:energy="energy"
           :liked="true"
-          v-on:click="handleClick"
-          :isReceiptOfDay="true"
+          @click="action"
+          :isRecipeOfDay="false"
         />
       </div>
     </div>
@@ -50,13 +59,8 @@ export default {
     }
   },
   methods: {
-    handleClick: function(event) {
-      // `this` inside methods points to the Vue instance
-      alert("Hello " + this.name + "!");
-      // `event` is the native DOM event
-      if (event) {
-        alert(event.target.tagName);
-      }
+    action: function() {
+      alert("Card is clicked");
     }
   }
 };
@@ -93,5 +97,8 @@ export default {
   margin-top: 100px;
   border: 2px dashed red;
   padding: 16px;
+}
+.gutter {
+  height: 30px;
 }
 </style>

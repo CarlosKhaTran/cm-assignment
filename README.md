@@ -67,13 +67,11 @@ There is a `PremiumRecipeCard.spec.js` file which you can use to write some test
 
 ### Reusability
 
-Keep in mind that there may be other variations of the Recipe Card design. Take a look at this **Recipe of the Day** card design:
+Toggle the props isRecipeOfDay to change the UI of RecipeOfTheDay
 
-<img src=".github/ROTD.png" width="500">
+I dont think its really necessary to create a new component to implement this. Using some css stuff can help
 
-Don't build out this component (unless you have extra time), but please explain how you would build out this `<RecipeOfTheDay>` component with maximum code re-use from the `<PremiumRecipeCard>`, as they mostly share the same data props with just a tweaked design.
-
-You can send that over to us via email/Slack when you are done with the assignment, or you can just include it in the README file, whatever works best!
+But if you want to create a new component and reuse PremiumRecipeCard. thats possible and it wont take too much time
 
 ## Project setup
 
